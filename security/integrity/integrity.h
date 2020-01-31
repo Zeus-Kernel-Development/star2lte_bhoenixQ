@@ -127,7 +127,6 @@ struct integrity_iint_cache {
 	unsigned long five_flags;
 	enum five_file_integrity five_status;
 	struct integrity_label *five_label;
-	bool five_signing;
 #endif
 };
 
@@ -182,7 +181,7 @@ static inline int asymmetric_verify(struct key *keyring, const char *sig,
 }
 #endif
 
-#ifdef CONFIG_IMA_LOAD_X509
+#ifdef CONFIG_FIVE_LOAD_X509
 void __init ima_load_x509(void);
 #else
 static inline void ima_load_x509(void)

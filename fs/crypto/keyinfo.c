@@ -113,7 +113,7 @@ static int validate_user_key(struct fscrypt_info *crypt_info,
 		res = -ENOKEY;
 		goto out;
 	}
-	ukp = user_key_payload_locked(keyring_key);
+	ukp = user_key_payload(keyring_key);
 	if (!ukp) {
 		/* key was revoked before we acquired its semaphore */
 		res = -EKEYREVOKED;
@@ -481,7 +481,7 @@ static inline int __find_and_derive_fskey2(const struct inode *inode,
 		res = -ENOKEY;
 		goto out;
 	}
-	ukp = user_key_payload_locked(keyring_key);
+	ukp = user_key_payload(keyring_key);
 	if (!ukp) {
 		/* key was revoked before we acquired its semaphore */
 		res = -EKEYREVOKED;

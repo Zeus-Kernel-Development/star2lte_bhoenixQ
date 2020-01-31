@@ -147,17 +147,12 @@ static inline struct ecryptfs_auth_tok *
 ecryptfs_get_key_payload_data(struct key *key)
 {
 	struct ecryptfs_auth_tok *auth_tok;
-	const struct user_key_payload *ukp;
 
 	auth_tok = ecryptfs_get_encrypted_key_payload_data(key);
-	if (auth_tok)
+	if (!auth_tok)
+		return (struct ecryptfs_auth_tok *)user_key_payload(key)->data;
+	else
 		return auth_tok;
-
-	ukp = user_key_payload_locked(key);
-	if (!ukp)
-		return ERR_PTR(-EKEYREVOKED);
-
-	return (struct ecryptfs_auth_tok *)ukp->data;
 }
 
 #define ECRYPTFS_MAX_CIPHER_MODE_SIZE 3

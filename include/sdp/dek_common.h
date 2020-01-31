@@ -22,9 +22,6 @@
 #include <linux/device.h>
 
 #include <sdp/common.h>
-#ifdef CONFIG_FSCRYPT_SDP
-#include "../../fs/crypto/sdp/sdp_crypto.h"
-#endif
 
 // ==== common configs
 #define SDPK_DEFAULT_ALGOTYPE (SDPK_ALGOTYPE_ASYMM_ECDH)
@@ -60,9 +57,6 @@
 //#define DEK_TYPE_DH_PUB       4
 #define DEK_TYPE_DH_ENC         5
 #define DEK_TYPE_ECDH256_ENC    6
-#define DEK_TYPE_DUMMY          7
-#define DEK_TYPE_SS             8
-#define DEK_TYPE_SS_PAYLOAD     9
 
 // KEK types
 #define KEK_TYPE_SYM		10
@@ -72,7 +66,6 @@
 #define KEK_TYPE_DH_PRIV	14
 #define KEK_TYPE_ECDH256_PUB    15
 #define KEK_TYPE_ECDH256_PRIV   16
-#define KEK_TYPE_SS             17
 
 #define SDPK_PATH_MAX	256
 #define SDPK_PATH_FMT    "/data/system/users/%d/SDPK_%s"
@@ -108,22 +101,6 @@ typedef struct _payload {
 	unsigned char dpub_buf[DH_MAXLEN];
 } dh_payload;
 
-typedef struct _ss_key {
-	unsigned int len;
-	unsigned char buf[KEK_SS_LEN];
-}__attribute__((__packed__)) ssk_t;
-
-typedef struct dh_key {
-	unsigned int type;
-	unsigned int len;
-	unsigned char buf[DH_MAXLEN];
-}__attribute__((__packed__)) dhk_t;
-
-typedef struct _ss_payload {
-	dhk_t dh;
-	ssk_t ss;
-}__attribute__((__packed__)) ss_payload;
-
 /* Debug */
 #define DEK_DEBUG		0
 
@@ -134,7 +111,6 @@ typedef struct _ss_payload {
 #endif /* DEK_DEBUG */
 #define DEK_LOGE(...) printk("dek: "__VA_ARGS__)
 
-void hex_key_dump(const char* tag, uint8_t *data, size_t data_len);
 void key_dump(unsigned char *buf, int len);
 
 int is_kek_available(int userid, int kek_type);
@@ -148,10 +124,5 @@ int is_root(void);
 int is_current_epmd(void);
 int is_current_adbd(void);
 int is_system_server(void);
-
-#ifdef CONFIG_FSCRYPT_SDP
-extern int fscrypt_sdp_cache_init(void);
-extern void fscrypt_sdp_cache_drop_inode_mappings(int engine_id);
-#endif
 
 #endif

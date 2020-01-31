@@ -1896,7 +1896,7 @@ static int exec_binprm(struct linux_binprm *bprm)
 		ptrace_event(PTRACE_EVENT_EXEC, old_vpid);
 		proc_exec_connector(current);
 	} else {
-		task_integrity_delayed_reset(current, CAUSE_EXEC, bprm->file);
+		task_integrity_delayed_reset(current);
 	}
 
 	return ret;

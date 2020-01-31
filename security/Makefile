@@ -45,11 +45,3 @@ obj-$(CONFIG_TZ_ICCC)	  += tz_iccc/
 # MST driver
 obj-$(CONFIG_MST_LDO)	  += mstdrv/
 
-# FIVE
-subdir-$(CONFIG_FIVE)			+= samsung/five
-obj-$(CONFIG_FIVE)			+= samsung/five/
-
-# Knox SDP
-obj-$(CONFIG_SDP) += sdp/
-obj-$(CONFIG_SDP) += sdp/built-in.o
-
