@@ -2,6 +2,7 @@
 #define _LINUX_FTS_TS_H_
 
 #include <linux/device.h>
+#include <linux/pm_qos.h>
 #include <linux/input/sec_cmd.h>
 
 #define FTS_SUPPORT_TOUCH_KEY
@@ -605,6 +606,7 @@ struct fts_ts_info {
 #endif
 	struct mutex i2c_mutex;
 	struct mutex device_mutex;
+	struct pm_qos_request pm_qos_req;
 	bool touch_stopped;
 	bool reinit_done;
 

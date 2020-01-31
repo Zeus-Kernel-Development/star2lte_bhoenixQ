@@ -1846,6 +1846,10 @@ static irqreturn_t fts_interrupt_handler(int irq, void *handle)
 		pm_wakeup_event(info->input_dev->dev.parent, 1000);
 	}
 #endif
+
+	/* prevent CPU from entering deep sleep */
+	pm_qos_update_request(&info->pm_qos_req, 100);
+
 	evtcount = 0;
 	fts_read_reg(info, &regAdd[0], 3, (unsigned char *)&evtcount, 2);
 
@@ -1866,6 +1870,7 @@ static irqreturn_t fts_interrupt_handler(int irq, void *handle)
 		(info->fts_power_state == FTS_POWER_STATE_LOWPOWER))
 		pm_relax(info->input_dev->dev.parent);
 #endif
+	pm_qos_update_request(&info->pm_qos_req, PM_QOS_DEFAULT_VALUE);
 
 	return IRQ_HANDLED;
 }
@@ -2446,6 +2451,9 @@ static int fts_probe(struct i2c_client *client, const struct i2c_device_id *idp)
 
 	info->tsp_enabled = true;
 
+	pm_qos_add_request(&info->pm_qos_req, PM_QOS_CPU_DMA_LATENCY,
+			PM_QOS_DEFAULT_VALUE);
+
 	retval = fts_irq_enable(info, true);
 	if (retval < 0) {
 		input_info(true, &info->client->dev,
@@ -2551,6 +2559,7 @@ err_sec_cmd:
 		fts_irq_enable(info, false);
 err_enable_irq:
 	input_unregister_device(info->input_dev);
+		input_unregister_device(info->input_dev_pad);
 	info->input_dev = NULL;
 
 err_register_input:
@@ -2565,6 +2574,7 @@ err_input_allocate_device:
 	kfree(info);
 err_get_drv_data:
 err_setup_drv_data:
+
 	return retval;
 }
 
@@ -2620,7 +2630,7 @@ static int fts_remove(struct i2c_client *client)
 	info->board->power(info, false);
 
 	kfree(info);
-
+	pm_qos_remove_request(&info->pm_qos_req);
 	return 0;
 }
 
