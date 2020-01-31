@@ -1,7 +1,6 @@
 
 obj-$(CONFIG_FIVE) += task_integrity.o
 obj-$(CONFIG_FIVE) += five.o
-obj-$(CONFIG_FIVE_PA_FEATURE) += five_pa.o
 obj-$(CONFIG_FIVE_TEE_DRIVER) += five_tee_interface.o
 
 EXTRA_CFLAGS += -I$(src)
