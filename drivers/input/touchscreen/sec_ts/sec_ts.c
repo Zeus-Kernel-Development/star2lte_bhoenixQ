@@ -1174,24 +1174,7 @@ static void sec_ts_read_event(struct sec_ts_data *ts)
 						}
 
 						location_detect(ts, location, ts->coord[t_id].x, ts->coord[t_id].y);
-#if !defined(CONFIG_SAMSUNG_PRODUCT_SHIP)
-						input_info(true, &ts->client->dev,
-								"%s[R] tID:%d p:%s dd:%d,%d mc:%d tc:%d lx:%d ly:%d pc:%d f:%d\n",
-								ts->dex_name, t_id, location,
-								ts->coord[t_id].x - ts->coord[t_id].p_x,
-								ts->coord[t_id].y - ts->coord[t_id].p_y,
-								ts->coord[t_id].mcount, ts->touch_count,
-								ts->coord[t_id].x, ts->coord[t_id].y,
-								ts->coord[t_id].palm_count, max_force_p);
-#else
-						input_info(true, &ts->client->dev,
-								"%s[R] tID:%d p:%s dd:%d,%d mc:%d tc:%d pc:%d f:%d\n",
-								ts->dex_name, t_id, location,
-								ts->coord[t_id].x - ts->coord[t_id].p_x,
-								ts->coord[t_id].y - ts->coord[t_id].p_y,
-								ts->coord[t_id].mcount, ts->touch_count,
-								ts->coord[t_id].palm_count, max_force_p);
-#endif
+
 						ts->coord[t_id].action = SEC_TS_COORDINATE_ACTION_NONE;
 						ts->coord[t_id].mcount = 0;
 						ts->coord[t_id].palm_count = 0;
@@ -1237,45 +1220,9 @@ static void sec_ts_read_event(struct sec_ts_data *ts)
 						ts->coord[t_id].p_x = ts->coord[t_id].x;
 						ts->coord[t_id].p_y = ts->coord[t_id].y;
 
-#if !defined(CONFIG_SAMSUNG_PRODUCT_SHIP)
-						input_info(true, &ts->client->dev,
-								"%s[P] tID:%d.%d x:%d y:%d z:%d major:%d minor:%d p:%s tc:%d type:%X noise:%x,%d\n",
-								ts->dex_name, t_id, (ts->input_dev->mt->trkid - 1) & TRKID_MAX,
-								ts->coord[t_id].x, ts->coord[t_id].y, ts->coord[t_id].z,
-								ts->coord[t_id].major, ts->coord[t_id].minor,
-								location, ts->touch_count,
-								ts->coord[t_id].ttype, ts->touch_noise_status,
-								ts->external_noise_mode);
-#else
-						input_info(true, &ts->client->dev,
-								"%s[P] tID:%d.%d z:%d major:%d minor:%d p:%s tc:%d type:%X noise:%x,%d\n",
-								ts->dex_name, t_id, (ts->input_dev->mt->trkid - 1) & TRKID_MAX, ts->coord[t_id].z,
-								ts->coord[t_id].major, ts->coord[t_id].minor,
-								location, ts->touch_count,
-								ts->coord[t_id].ttype, ts->touch_noise_status,
-								ts->external_noise_mode);
-#endif
 					} else if (ts->coord[t_id].action == SEC_TS_COORDINATE_ACTION_MOVE) {
 						if (pre_action == SEC_TS_COORDINATE_ACTION_NONE || pre_action == SEC_TS_COORDINATE_ACTION_RELEASE){
 							location_detect(ts, location, ts->coord[t_id].x, ts->coord[t_id].y);
-#if !defined(CONFIG_SAMSUNG_PRODUCT_SHIP)
-							input_info(true, &ts->client->dev,
-									"%s[M] tID:%d.%d x:%d y:%d z:%d major:%d minor:%d p:%s tc:%d type:%X noise:%x,%d\n",
-									ts->dex_name, t_id, ts->input_dev->mt->trkid & TRKID_MAX,
-									ts->coord[t_id].x, ts->coord[t_id].y, ts->coord[t_id].z,
-									ts->coord[t_id].major, ts->coord[t_id].minor,
-									location, ts->touch_count,
-									ts->coord[t_id].ttype, ts->touch_noise_status,
-									ts->external_noise_mode);
-#else
-							input_info(true, &ts->client->dev,
-									"%s[M] tID:%d.%d z:%d major:%d minor:%d p:%s tc:%d type:%X noise:%x,%d\n",
-									ts->dex_name, t_id, ts->input_dev->mt->trkid & TRKID_MAX, ts->coord[t_id].z,
-									ts->coord[t_id].major, ts->coord[t_id].minor,
-									location, ts->touch_count,
-									ts->coord[t_id].ttype, ts->touch_noise_status,
-									ts->external_noise_mode);
-#endif
 						}
 
 						if ((ts->coord[t_id].ttype == SEC_TS_TOUCHTYPE_GLOVE) && !ts->touchkey_glove_mode_status) {
@@ -1447,9 +1394,6 @@ static irqreturn_t sec_ts_irq_thread(int irq, void *ptr)
 		wait_for_completion_interruptible_timeout(&ts->secure_interrupt,
 				msecs_to_jiffies(5 * MSEC_PER_SEC));
 
-		input_info(true, &ts->client->dev,
-				"%s: secure interrupt handled\n", __func__);
-
 		return IRQ_HANDLED;
 	}
 #endif
@@ -1517,9 +1461,6 @@ int sec_ts_glove_mode_enables(struct sec_ts_data *ts, int mode)
 		input_err(true, &ts->client->dev, "%s: Failed to send command", __func__);
 		goto glove_enable_err;
 	}
-
-	input_info(true, &ts->client->dev, "%s: glove:%d, status:%x\n", __func__,
-			mode, ts->touch_functions);
 
 	return 0;
 
@@ -2497,26 +2438,6 @@ void sec_ts_unlocked_release_all_finger(struct sec_ts_data *ts)
 				(ts->coord[i].action == SEC_TS_COORDINATE_ACTION_MOVE)) {
 
 			location_detect(ts, location, ts->coord[i].x, ts->coord[i].y);
-#if !defined(CONFIG_SAMSUNG_PRODUCT_SHIP)
-			input_info(true, &ts->client->dev,
-					"[RA] tID:%d p:%s dd:%d,%d mc:%d tc:%d lx:%d ly:%d p:%d noise:%x\n",
-					i, location,
-					ts->coord[i].x - ts->coord[i].p_x,
-					ts->coord[i].y - ts->coord[i].p_y,
-					ts->coord[i].mcount, ts->touch_count,
-					ts->coord[i].x, ts->coord[i].y,
-					ts->coord[i].palm_count,
-					ts->touch_noise_status);
-#else
-			input_info(true, &ts->client->dev,
-					"[RA] tID:%d p:%s dd:%d,%d mc:%d tc:%d p:%d noise:%x\n",
-					i, location,
-					ts->coord[i].x - ts->coord[i].p_x,
-					ts->coord[i].y - ts->coord[i].p_y,
-					ts->coord[i].mcount, ts->touch_count,
-					ts->coord[i].palm_count,
-					ts->touch_noise_status);
-#endif
 
 			ts->coord[i].action = SEC_TS_COORDINATE_ACTION_RELEASE;
 
@@ -2566,26 +2487,6 @@ void sec_ts_locked_release_all_finger(struct sec_ts_data *ts)
 				(ts->coord[i].action == SEC_TS_COORDINATE_ACTION_MOVE)) {
 
 			location_detect(ts, location, ts->coord[i].x, ts->coord[i].y);
-#if !defined(CONFIG_SAMSUNG_PRODUCT_SHIP)
-			input_info(true, &ts->client->dev,
-					"[RA] tID:%d p:%s dd:%d,%d mc:%d tc:%d lx:%d ly:%d p:%d noise:%x\n",
-					i, location,
-					ts->coord[i].x - ts->coord[i].p_x,
-					ts->coord[i].y - ts->coord[i].p_y,
-					ts->coord[i].mcount, ts->touch_count,
-					ts->coord[i].x, ts->coord[i].y,
-					ts->coord[i].palm_count,
-					ts->touch_noise_status);
-#else
-			input_info(true, &ts->client->dev,
-					"[RA] tID:%d p:%s dd:%d,%d mc:%d tc:%d p:%d noise:%x\n",
-					i, location,
-					ts->coord[i].x - ts->coord[i].p_x,
-					ts->coord[i].y - ts->coord[i].p_y,
-					ts->coord[i].mcount, ts->touch_count,
-					ts->coord[i].palm_count,
-					ts->touch_noise_status);
-#endif
 
 			ts->coord[i].action = SEC_TS_COORDINATE_ACTION_RELEASE;
 
