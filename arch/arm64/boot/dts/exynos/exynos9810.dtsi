@@ -24,7 +24,6 @@
 #include <dt-bindings/ufs/ufs.h>
 #include "exynos9810-pm-domains.dtsi"
 #include "exynos9810-etm.dtsi"
-#include "exynos9810-inputbooster.dtsi"
 #include "exynos9810-ess.dtsi"
 
 / {
