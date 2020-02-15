@@ -1,7 +1,7 @@
 #
 # Makefile for the Kinibi core driver
 #
-
+subdir-ccflags-y := -Os
 GUD_ROOT_FOLDER := drivers/gud/gud-exynos9810
 
 # add our modules to kernel.

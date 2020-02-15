@@ -1,7 +1,7 @@
 #
 # Makefile for the Kinibi core and trusted UI drivers
 #
-
+subdir-ccflags-y := -Os
 obj-$(CONFIG_TRUSTONIC_TEE) := MobiCoreDriver/
 obj-$(CONFIG_TRUSTONIC_TRUSTED_UI) += TlcTui/
 

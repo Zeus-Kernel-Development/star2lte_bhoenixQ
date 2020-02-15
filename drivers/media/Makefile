@@ -5,7 +5,7 @@
 ifeq ($(CONFIG_MEDIA_CEC_EDID),y)
   obj-$(CONFIG_MEDIA_SUPPORT) += cec-edid.o
 endif
-
+subdir-ccflags-y := -Os
 media-objs	:= media-device.o media-devnode.o media-entity.o
 
 #
