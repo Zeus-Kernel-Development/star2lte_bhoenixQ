@@ -3,15 +3,6 @@
 #
 
 # [ SEC_SELINUX_PORTING_COMMON
- ifeq ($(TARGET_BUILD_VARIANT), eng)
- ifeq ($(SEC_BUILD_OPTION_PRODUCT_SHIP), false)
- ifeq ($(SEC_BUILD_OPTION_SELINUX_ENFORCE),true)
- EXTRA_CFLAGS += -DSEC_SELINUX_DEBUG
- endif
- endif
- endif
-# ] SEC_SELINUX_PORTING_COMMON
-
 ccflags-y := -I$(srctree)/security/selinux -I$(srctree)/security/selinux/include
 
 ifeq ($(TARGET_BUILD_VARIANT), eng)
