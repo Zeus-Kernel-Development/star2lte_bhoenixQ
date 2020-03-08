@@ -3894,7 +3894,7 @@
 		use_delay_time = "true";
 		delay_time_list = "20";
 
-		freq_info = <2093000 208000 1014000 208000 2093000 2093000>;
+		freq_info = <2093000 208000 208000 208000 2093000 2093000>;
 		/* initial_freq, default_qos, suspend_freq, min_freq, max_freq reboot_freq */
 
 		/* Booting value */
@@ -3957,7 +3957,7 @@
 		/* Delay time */
 		use_delay_time = "false";
 
-		freq_info = <690000 630000 690000 630000 690000 690000>;
+		freq_info = <690000 630000 630000 630000 690000 690000>;
 		/* <initial_freq, default_qos, suspend_freq, min, max, reboot_freq> */
 
 		/* Booting value */
@@ -3987,7 +3987,7 @@
 		/* Delay time */
 		use_delay_time = "false";
 
-		freq_info = <640000 200000 640000 200000 640000 640000>;
+		freq_info = <640000 200000 200000 200000 640000 640000>;
 		/* <initial_freq, default_qos, suspend_freq, min, max, reboot_freq> */
 
 		/* Booting value */
@@ -4017,7 +4017,7 @@
 		/* Delay time */
 		use_delay_time = "false";
 
-		freq_info = <690000 590000 690000 590000 690000 690000>;
+		freq_info = <690000 590000 590000 590000 690000 690000>;
 		/* <initial, default_qos, suspend_freq, min, max, reboot_freq> */
 
 		/* Booting value */
@@ -4137,7 +4137,7 @@
 		/* Delay time */
 		use_delay_time = "false";
 
-		freq_info = <336000 73000 336000 73000 336000 336000>;
+		freq_info = <336000 73000 73000 73000 336000 336000>;
 		/* <initial, default_qos, suspend_freq, min, max, reboot_freq> */
 
 		/* Booting value */
