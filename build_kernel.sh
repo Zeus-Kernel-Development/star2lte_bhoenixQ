@@ -2,7 +2,7 @@
 
 #Build kernel
 export ARCH=arm64
-export CROSS_COMPILE=~/kernel/toolchain/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
+export CROSS_COMPILE=~/kernel/toolchain/gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu/bin/aarch64-none-linux-gnu-
 
 export ANDROID_MAJOR_VERSION=q
 
