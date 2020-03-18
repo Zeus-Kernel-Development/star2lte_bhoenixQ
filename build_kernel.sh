@@ -21,3 +21,5 @@ rm -rf $DTS/*.dtb
 
 # Copy files
 cp arch/arm64/boot/Image boot.img-zImage
+cp boot.img-dt ~/s9/split_img
+cp boot.img-zImage ~/s9/split_img
