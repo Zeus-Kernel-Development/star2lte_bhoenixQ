@@ -15,7 +15,7 @@
 		resolution = <320 240>;
 	/*	resolution = <1080 1920>; */
 		size = <80 120>;
-		timing,refresh = <60>;
+		timing,refresh = <90>;
 		timing,h-porch = <20 20 20>;
 		timing,v-porch = <20 20 20>;
 		timing,dsi-hs-clk = <600>;
