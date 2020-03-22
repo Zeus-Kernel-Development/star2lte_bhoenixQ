@@ -543,8 +543,6 @@
 					cable_number = <33>;
 					input_current = <820>;
 					charging_current = <1400>;
-				};
-			};
 		}; /* end of __overlay__ */
 	}; /* end of fragment */
 };

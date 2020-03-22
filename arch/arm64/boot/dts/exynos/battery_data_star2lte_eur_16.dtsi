@@ -28,15 +28,15 @@
 		battery,chg_float_voltage_conv = <10>;
 		battery,swelling_drop_float_voltage = <41500>;
 		battery,wa_float_voltage = <40500>;
-	};
-
+		
 		/* cycle, chg_float_voltage, recharge_condition_vcell, full_condition_vcell, full_condition_soc */
 		battery,age_data = <0 43500 4280 4250 93
 				200 43500 4280 4250 93
 				250 43500 4280 4250 93
 				300 43500 4280 4250 93
 				1000 43500 4280 4250 93>;
-
+	};
+	
 	max77865-fuelgauge {
 		status = "okay";
 		fuelgauge,fuel_alert_soc = <1>;
