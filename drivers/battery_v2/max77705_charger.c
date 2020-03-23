@@ -1806,7 +1806,9 @@ static irqreturn_t max77705_batp_irq(int irq, void *data)
 
 #if defined(CONFIG_MAX77705_CHECK_B2SOVRC)
 #if defined(CONFIG_REGULATOR_S2MPS18)
+#if defined(CONFIG_SEC_PM_DEBUG)
 extern void s2mps18_print_adc_val_power(void);
+#endif
 #endif
 static irqreturn_t max77705_bat_irq(int irq, void *data)
 {
@@ -1824,7 +1826,9 @@ static irqreturn_t max77705_bat_irq(int irq, void *data)
 		if (reg_data == 0x06) {
 			pr_info("OCP(B2SOVRC)\n");
 #if defined(CONFIG_REGULATOR_S2MPS18)
+#if defined(CONFIG_SEC_PM_DEBUG)
 			s2mps18_print_adc_val_power();
+#endif
 #endif
 			/* print vnow, inow */
 			psy_do_property("max77705-fuelgauge", get, POWER_SUPPLY_EXT_PROP_MONITOR_WORK, value);
